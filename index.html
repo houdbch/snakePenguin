@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+ <head>
+     <title>Play Snake!</title>
+  <meta charset='utf-8'/>
+  	<link rel="stylesheet" href="css/style.css">
+     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+ </head>
+ <body>
+  <div class= 'game'>
+      <div id = 'main_div'>
+        <canvas id='mycanvas'>
+        </canvas>
+      </div>
+      <div class = 'buttons'>
+          <button id='start_button'>Play</button>
+          <button id='save_button'>Save</button>
+          <button id='load_button'>Load</button>
+      </div>
+  </div>
+  <script src="js/snake_game.js"></script>
+ <script>
+     $("#save_button").click( function () {
+         if(submit_score === 1){
+             var msg = {
+                 "messageType": "SCORE",
+                 "score": parseFloat($("#score").text())
+             };
+             window.parent.postMessage(msg, "*");
+         }
+         else {
+             var msg = {
+                 "messageType": "SAVE",
+                 "gameState": {
+                     "playerItems": {"snake":snake, "direction":direction},
+                     "score": score
+                 }
+             };
+             window.parent.postMessage(msg, "*");
+         }
+     });
+     $("#load_button").click( function () {
+         var msg = {
+             "messageType": "LOAD_REQUEST",
+         };
+         window.parent.postMessage(msg, "*");
+     });
+
+     window.addEventListener("message", function(evt) {
+         if(evt.data.messageType === "LOAD") {
+             snake = evt.data.gameState.playerItems.snake;
+             score = evt.data.gameState.score;
+             direction = evt.data.gameState.playerItems.direction;
+             generateFood();
+             already_started = 1;
+             pause_game = 0;
+             submit_score = 0;
+             gameloop = setInterval(paint, 70);
+         } else if (evt.data.messageType === "ERROR") {
+             alert(evt.data.info);
+         }
+     });
+
+
+
+     var message =  {
+         messageType: "SETTING",
+         options: {
+             "width": width, //Integer
+             "height": height //Integer
+         }
+     };
+     window.parent.postMessage(message, "*");
+ </script>
+ </body>
+
+</html>

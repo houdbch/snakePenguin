@@ -1,0 +1,42 @@
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+}
+
+#main_div {
+      max-width: 600px;
+      height: 500px;
+      min-height: 300px;
+      background-color: #f0ffff;
+      margin:0 auto;
+      position: relative;
+
+    }
+#mycanvas {
+    top: 0; bottom: 0; left: 0;
+}
+.buttons {
+    width: 400px;
+    margin:0 auto;
+}
+button {
+      background-color: purple;
+      color: white;
+      border: none;
+      bottom: 0;
+      height: 30px;
+      font-size: 12pt;
+      float: left;
+      width: 90px;
+      margin: 10px 10px 10px 10px;
+}
+button:hover {
+      background-color: blue;
+}
+
+
+
+
+
